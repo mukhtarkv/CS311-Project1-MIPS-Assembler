@@ -1,12 +1,15 @@
-CC=gcc
+CC=g++
 
 default: runfile
 
-runfile.o: main.c 
-	$(CC) -c main.c -std=c99 -o runfile.o
+runfile.o: main.cpp assembler.h
+	$(CC) -c main.cpp -o runfile.o
  
-runfile: runfile.o
-	$(CC) runfile.o  -o runfile
+runfile: runfile.o assembler.o
+	$(CC) runfile.o assembler.o -o runfile
+
+assembler.o: assembler.h
+	$(CC) -c assembler.cpp
 
 test: default test_1 test_2 test_3 test_4 test_5 
 

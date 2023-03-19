@@ -1,6 +1,13 @@
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include "assembler.h"
+using namespace std;
 
 
 int main(int argc, char* argv[]){
@@ -25,13 +32,21 @@ int main(int argc, char* argv[]){
 		char *file=(char *)malloc(strlen(argv[1])+3);
 		strncpy(file,argv[1],strlen(argv[1]));
 
-		if(freopen(file, "r",stdin)==0){
-			printf("File open Error!\n");
-			exit(1);
-		}
+		ifstream infile(file);
+
+		// if(freopen(file, "r",stdin)==0){
+		// 	printf("File open Error!\n");
+		// 	exit(1);
+		// }
 
 		//From now on, if you want to read string from input file, you can just use scanf function.
-
+		// Create an empty vector
+    	vector<string> assembly_lines;
+		string line;
+		while (getline(infile, line))
+		{
+			assembly_lines.push_back(line);
+		}
 
 		// For output file write 
 		// You can see your code's output in the sample_input/example#.o 
@@ -41,10 +56,10 @@ int main(int argc, char* argv[]){
 		freopen(file,"w",stdout);
 
 		//If you use printf from now on, the result will be written to the output file.
-
-		printf("Hello World!\n"); 
-		
-
+		vector<string> output_lines = assemble(assembly_lines);
+		for (string output_line : output_lines) {
+			cout << output_line;
+		}
 	}
 	return 0;
 }
